@@ -17,5 +17,9 @@ class InChat(StatesGroup):
     state_ = State()
 
 
+class InSearch(StatesGroup):
+    state_ = State()
+
+
 class NotLogin(StatesGroup):
     state_ = State()

@@ -58,7 +58,7 @@ async def get_chat(chat_id):
 async def get_active_chat(chat_id):
     '''Получение активного чата'''
     async with aiosqlite.connect(r'database/users_id.db') as db:
-        chat = await db.execute(f"""SELECT * FROM chats WHERE chat1 = {chat_id}""", ())
+        chat = await db.execute(f"""SELECT * FROM chats WHERE chat1 = {chat_id} OR chat2 = {chat_id}""", ())
         chat = await chat.fetchall()
         chat_info = []
         id_chat = 0

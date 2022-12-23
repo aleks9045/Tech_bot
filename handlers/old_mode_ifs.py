@@ -1,5 +1,5 @@
 from start_bot import dp, bot
-from aiogram import types
+from aiogram import types, Dispatcher
 from keyboards import kb
 
 
@@ -102,3 +102,15 @@ async def process_callback_btn_delete2(callback_query: types.CallbackQuery):
     elif callback_query.data.split('btn_')[1] == 'track1':
         await bot.send_message(callback_query.from_user.id, text='👁 Чтобы <b>отследить возврат</b> нужно',
                                parse_mode='HTML')
+
+
+@dp.callback_query_handler(lambda call: call.data == 'old_button', state='*')
+async def old_mode(callback: types.CallbackQuery):
+    await bot.send_message(callback.from_user.id, '✅Включён старый режим.\n\nВопрос по какой теме вас интересует?',
+                           reply_markup=kb.old)
+
+
+def register_handlers_ifs(dp: Dispatcher):
+    dp.register_callback_query_handler(process_callback_btn_delete1)
+    dp.register_callback_query_handler(process_callback_btn_delete2)
+    dp.register_callback_query_handler(old_mode)
