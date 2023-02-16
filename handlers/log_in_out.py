@@ -2,7 +2,7 @@ from aiogram import types, Dispatcher
 from aiogram.dispatcher import FSMContext
 from Data import config
 from database import db
-from start_bot import dp
+from bot import dp
 from keyboards import kb
 from states.state import *
 
@@ -21,8 +21,7 @@ async def login(message: types.Message, state: FSMContext):
                              '/remove id_пользователя - Удаление опрератора.')
     else:
         await LoginUser.state_.set()
-        await message.answer('✅ Вы зарегистрировались как клиент.\n\n'
-                             'Теперь вы можете изложить интересующий вас вопрос.')
+        await message.answer('✅ Вы зарегистрировались как клиент.')
 
 
 @dp.message_handler(state=LoginOperator.state_, commands=["logout"])

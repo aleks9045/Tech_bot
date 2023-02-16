@@ -2,7 +2,7 @@ from aiogram import types, Dispatcher
 
 from Data import config
 from database import db
-from start_bot import dp
+from bot import dp
 from keyboards import kb
 from states.state import *
 

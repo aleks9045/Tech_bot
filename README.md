@@ -1,1 +1,1 @@
-# BBProgBot. IT-tech 2022.
+# Peak-IT 2023. FV Kostill.

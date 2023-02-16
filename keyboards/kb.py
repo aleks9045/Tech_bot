@@ -25,8 +25,6 @@ tg_ssilka = InlineKeyboardButton('Наш Телеграмм', url='https://t.me/
 ssilka.add(vk_ssilka, tg_ssilka)
 
 
-
-
 find = ReplyKeyboardMarkup(resize_keyboard=True)
 find_button = KeyboardButton('/find')
 find.add(find_button)

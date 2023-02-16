@@ -130,7 +130,6 @@ async def vi_vishli_iz_chata(chat_id):
         chat = await db.execute(f"""SELECT * FROM chats""")
         chat = await chat.fetchall()
         for row in chat:
-            print(row[0], row[1], row[2])
             if row[1] == chat_id:
                 return row[2]
             elif row[2] == chat_id:
