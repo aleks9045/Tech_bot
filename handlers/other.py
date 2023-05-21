@@ -16,6 +16,7 @@ async def other(message: types.Message):
 @dp.callback_query_handler(lambda call: call.data == 'tests', state=LoginUser.state_)
 async def tests(callback: types.CallbackQuery):
     await bot.send_message(callback.from_user.id, '❔Выберите предмет', reply_markup=kb.tests)
+    await callback.answer()
 
 
 @dp.callback_query_handler(lambda call: call.data == 'rus', state=LoginUser.state_)
@@ -25,6 +26,7 @@ async def rus(callback: types.CallbackQuery, state: FSMContext):
     tasks = await db.get_task()
     await state.update_data(first=0)
     await bot.send_message(callback.from_user.id, tasks[0][0], reply_markup=kb.ottf)
+    await callback.answer()
 
 
 @dp.message_handler(state=Rus_test.first)
@@ -87,8 +89,10 @@ async def tips(callback: types.CallbackQuery):
     if tip.startswith('!!!'):
         await bot.send_message(callback.from_user.id, tip, reply_markup=kb.more_tip)
         await bot.send_video(callback.from_user.id, open(r'C:\Users\aleks\PycharmProjects\Tech_bot\database\cat.mp4', 'rb'))
+        await callback.answer()
     else:
         await bot.send_message(callback.from_user.id, tip, reply_markup=kb.more_tip)
+        await callback.answer()
 
 
 def register_handlers_shedule(dp: Dispatcher):

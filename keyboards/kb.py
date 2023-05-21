@@ -22,9 +22,9 @@ tips_button2 = InlineKeyboardButton('Ещё совет', callback_data='tips')
 more_tip.add(tips_button2)
 
 tests = InlineKeyboardMarkup(resize_keyboard=True)
-rus = InlineKeyboardButton('👺Русский язык', callback_data='rus')
-eng = InlineKeyboardButton('💂‍♂Английский язык', callback_data='eng')
-math = InlineKeyboardButton('🏧Математика', callback_data='math')
+rus = InlineKeyboardButton('🖊Русский язык', callback_data='rus')
+eng = InlineKeyboardButton('🔤Английский язык', callback_data='eng')
+math = InlineKeyboardButton('🔢Математика', callback_data='math')
 tests.add(rus, eng, math)
 
 ottf = ReplyKeyboardMarkup(resize_keyboard=True)

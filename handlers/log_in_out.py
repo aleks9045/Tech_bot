@@ -23,7 +23,7 @@ async def login(message: types.Message, state: FSMContext):
         await RegisterUser.state_.set()
         if message.from_user.id in await db.get_all_users_id():
             info = await db.get_all_users_info(message.from_user.id)
-            await message.answer(f'✅ С возвращением, {info[0][2]}', reply_markup=kb.classes)
+            await message.answer(f'✔️С возвращением, {info[0][2]}', reply_markup=kb.classes)
             await state.finish()
             await LoginUser.state_.set()
         else:
@@ -57,6 +57,7 @@ async def start_change(callback: types.CallbackQuery, state: FSMContext):
     await state.finish()
     await ChangeUser.class_.set()
     await bot.send_message(callback.from_user.id, 'Введите класс, введите "нет", если не хотите менять информацию.')
+    await callback.answer()
 
 
 @dp.message_handler(state=ChangeUser.class_)
