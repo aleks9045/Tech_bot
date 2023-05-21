@@ -99,21 +99,21 @@ async def change_name(message: types.Message, state: FSMContext):
 async def logout_operator(message: types.Message, state: FSMContext):
     await state.finish()
     await NotLogin.state_.set()
-    await message.answer('⚠️ Вы вышли из своего аккаунта.', reply_markup=kb.ReplyKeyboardRemove)
+    await message.answer('⚠️ Вы вышли из своего аккаунта.', reply_markup=kb.ReplyKeyboardRemove())
 
 
 @dp.message_handler(state=LoginAdmin.state_, commands=["logout"])
 async def logout_admin(message: types.Message, state: FSMContext):
     await state.finish()
     await NotLogin.state_.set()
-    await message.answer('⚠️ Вы вышли из своего аккаунта.', reply_markup=kb.ReplyKeyboardRemove)
+    await message.answer('⚠️ Вы вышли из своего аккаунта.', reply_markup=kb.ReplyKeyboardRemove())
 
 
 @dp.message_handler(state=LoginUser.state_, commands=["logout"])
 async def logout(message: types.Message, state: FSMContext):
     await state.finish()
     await NotLogin.state_.set()
-    await message.answer('⚠️ Вы вышли из своего аккаунта.', reply_markup=kb.ReplyKeyboardRemove)
+    await message.answer('⚠️ Вы вышли из своего аккаунта.', reply_markup=kb.ReplyKeyboardRemove())
 
 
 def register_handlers_log_in_out(dp: Dispatcher):
