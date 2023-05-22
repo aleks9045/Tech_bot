@@ -16,14 +16,14 @@ async def login(message: types.Message, state: FSMContext):
         await message.answer('✅ Вы зарегистрировались как оператор.')
     elif message.from_user.id in config.admins:
         await LoginAdmin.state_.set()
-        await message.answer('✅ Вы зарегистрировались как админ.\n\n'
-                             '/add id_пользователя - Добавление опрератора.\n'
-                             '/remove id_пользователя - Удаление опрератора.')
+        await message.answer('✅Вы зарегистрировались как админ.\n\n'
+                             '/add id_пользователя - Добавление оператора.\n'
+                             '/remove id_пользователя - Удаление оператора.')
     else:
         await RegisterUser.state_.set()
         if message.from_user.id in await db.get_all_users_id():
             info = await db.get_all_users_info(message.from_user.id)
-            await message.answer(f'✔️С возвращением, {info[0][2]}', reply_markup=kb.classes)
+            await message.answer(f'✅С возвращением, {info[0][2]}', reply_markup=kb.classes)
             await state.finish()
             await LoginUser.state_.set()
         else:

@@ -21,15 +21,22 @@ async def help_me_help(message: types.Message):
                                                  f"/logout — Команда выхода из своего аккаунта.\n"
                                                  f"/me — Информация о вашем аккаунте\n"
                                                  f"/rm — Скрыть дополнительную клавиатуру\n"
+                                                 f"/rk — Показать дополнительную клавиатуру\n"
                                                  f"/all_week — Расписание на неделю\n"
                                                  f"/today — Расписание на сегодня\n"
                                                  f"/other — Другие функции бота\n\n"
+                                                 f"Большинство функций бота работают только если вы зашли в аккаунт.\n"
                                                  f"Предложения по улучшению бота? Пишите https://t.me/alisaaaaalisaaa")
 
 
 @dp.message_handler(state='*', commands=["rm"])
 async def logout_operator(message: types.Message, state: FSMContext):
     await message.answer(f'⌨️Клавиатура скрыта', reply_markup=kb.ReplyKeyboardRemove())
+
+
+@dp.message_handler(state='*', commands=["rk"])
+async def logout_operator(message: types.Message, state: FSMContext):
+    await message.answer(f'⌨️Клавиатура открыта', reply_markup=kb.classes)
 
 
 def register_handlers_main(dp: Dispatcher):

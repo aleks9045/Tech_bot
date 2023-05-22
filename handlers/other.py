@@ -86,13 +86,19 @@ async def third(message: types.Message, state: FSMContext):
 async def tips(callback: types.CallbackQuery):
     tips = await db.get_tip()
     tip = choice(tips)[0]
-    if tip.startswith('!!!'):
+    if tip.startswith('😺'):
         await bot.send_message(callback.from_user.id, tip, reply_markup=kb.more_tip)
-        await bot.send_video(callback.from_user.id, open(r'C:\Users\aleks\PycharmProjects\Tech_bot\database\cat.mp4', 'rb'))
+        await bot.send_video(callback.from_user.id, open(r'C:\Users\aleks\PycharmProjects\Tech_bot\Data', 'rb'))
         await callback.answer()
+
     else:
         await bot.send_message(callback.from_user.id, tip, reply_markup=kb.more_tip)
         await callback.answer()
+
+
+@dp.message_handler(content_types=["document"])
+async def sticker_file_id(message: types.Message):
+    await message.answer(f"ID документа {message.document.file_id}")
 
 
 def register_handlers_shedule(dp: Dispatcher):
