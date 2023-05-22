@@ -23,7 +23,7 @@ async def login(message: types.Message, state: FSMContext):
         await RegisterUser.state_.set()
         if message.from_user.id in await db.get_all_users_id():
             info = await db.get_all_users_info(message.from_user.id)
-            await message.answer(f'✅С возвращением, {info[0][2]}', reply_markup=kb.classes)
+            await message.answer(f'✅С возвращением, {info[0][2]}!', reply_markup=kb.classes)
             await state.finish()
             await LoginUser.state_.set()
         else:
@@ -34,8 +34,11 @@ async def login(message: types.Message, state: FSMContext):
 async def register(message: types.Message, state: FSMContext):
     data = message.text.upper()
     name = message.from_user.first_name
+    classes = [i[0] for i in await db.get_class()]
     if len(data) > 3:
         await message.answer(' ❗ Произошла ошибка, попробуйте еще раз')
+    elif data.upper() not in classes:
+        await message.answer(' ❗ Произошла ошибка, такого класса не существует')
     else:
         await db.new_user(message.from_user.id, data, name)
         await message.answer('✅ Вы успешно зарегистрировались.\nУзнайте расписание с помощью кнопок ниже.', reply_markup=kb.classes)
@@ -44,7 +47,7 @@ async def register(message: types.Message, state: FSMContext):
 
 
 @dp.message_handler(state=LoginUser.state_, commands=["me"])
-async def me(message: types.Message, state: FSMContext):
+async def me(message: types.Message):
     info = await db.get_all_users_info(message.from_user.id)
     await message.answer(f' 🛂 Ваш телеграм-айди: {info[0][0]}\n'
                          f'Ваш класс: {info[0][1]}\n'
@@ -63,6 +66,7 @@ async def start_change(callback: types.CallbackQuery, state: FSMContext):
 @dp.message_handler(state=ChangeUser.class_)
 async def change_class(message: types.Message, state: FSMContext):
     data = message.text
+    classes = [i[0] for i in await db.get_class()]
     if data.lower() == 'нет':
         info = await db.get_all_users_info(message.from_user.id)
         await state.update_data(class_=info[0][1])
@@ -70,10 +74,12 @@ async def change_class(message: types.Message, state: FSMContext):
         await message.answer('Теперь введите имя.')
     elif len(data) > 3:
         await message.answer(' ❗ Произошла ошибка, попробуйте еще раз')
+    elif data.upper() not in classes:
+        await message.answer(' ❗ Произошла ошибка, такого класса не существует')
     else:
         await state.update_data(class_=data.upper())
         await ChangeUser.next()
-        await message.answer('Теперь введите имя, введите "нет", если не хотите менять информацию.')
+        await message.answer('Успешно! Теперь введите имя, введите "нет", если не хотите менять информацию.')
 
 
 @dp.message_handler(state=ChangeUser.name)

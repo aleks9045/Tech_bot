@@ -15,7 +15,7 @@ async def other(message: types.Message):
 
 @dp.callback_query_handler(lambda call: call.data == 'tests', state=LoginUser.state_)
 async def tests(callback: types.CallbackQuery):
-    await bot.send_message(callback.from_user.id, '❔Выберите предмет', reply_markup=kb.tests)
+    await bot.send_message(callback.from_user.id, '❔Выберите предмет❔', reply_markup=kb.tests)
     await callback.answer()
 
 
@@ -35,13 +35,13 @@ async def first(message: types.Message, state: FSMContext):
     ans = message.text
     right = await db.get_answer()
     tasks = await db.get_task()
+    data = await state.get_data()
     if ans == str(right[0][0]):
-        await state.update_data(first=1)
+        await state.update_data(first=data['first'] + 1)
         await message.answer('✅Верно!')
         await message.answer(tasks[0][1])
     else:
-
-        await message.answer(f'❌Неверно! Правильный ответ был {right[0][0]}')
+        await message.answer(f'❌Неверно! Правильный ответ был {right[0][0]})')
         await message.answer(tasks[0][1])
 
 
@@ -51,13 +51,13 @@ async def second(message: types.Message, state: FSMContext):
     ans = message.text
     right = await db.get_answer()
     tasks = await db.get_task()
+    data = await state.get_data()
     if ans == str(right[0][1]):
-        await state.update_data(first=2)
+        await state.update_data(first=data['first'] + 1)
         await message.answer('✅Верно!')
         await message.answer(tasks[0][2])
-
     else:
-        await message.answer(f'❌Неверно! Правильный ответ был {right[0][0]}')
+        await message.answer(f'❌Неверно! Правильный ответ был {right[0][0]})')
         await message.answer(tasks[0][2])
 
 
@@ -66,16 +66,17 @@ async def third(message: types.Message, state: FSMContext):
     ans = message.text
     right = await db.get_answer()
     tasks = await db.get_task()
+    data = await state.get_data()
     if ans == str(right[0][2]):
-        await state.update_data(first=3)
-        await message.answer('Верно!')
+        await state.update_data(first=data['first'] + 1)
         data = await state.get_data()
-        await message.answer(f"✅✅✅Вы ответили правильно на {data['first']} вопросов из 3.", reply_markup=kb.classes)
+        await message.answer('Верно!')
+        await message.answer(f"✅Вы ответили правильно на {data['first']} вопросов из 3.", reply_markup=kb.classes)
         await state.finish()
         await LoginUser.state_.set()
     else:
         data = await state.get_data()
-        await message.answer(f'❌Неверно! Правильный ответ был {right[0][0]}')
+        await message.answer(f'❌Неверно! Правильный ответ был {right[0][2]}')
         await message.answer(f"Вы ответили правильно на {data['first']} вопросов из 3.\n"
                              f"Вы можете потренироваться на этом сайте: https://gramotei.online/demo/run", reply_markup=kb.classes)
         await state.finish()

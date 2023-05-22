@@ -54,9 +54,6 @@ async def today(message: types.Message):
             await message.answer(result)
 
 
-
-
-
 def register_handlers_shedule(dp: Dispatcher):
     dp.register_message_handler(week, commands=['all_week'])
     dp.register_message_handler(today, commands=['today'])

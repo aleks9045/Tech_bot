@@ -1,5 +1,4 @@
 import aiosqlite
-from Data import config
 
 
 async def add_operator(chat_id):
@@ -74,5 +73,12 @@ async def get_answer():
 async def get_tip():
     async with aiosqlite.connect(r'database/users_id.db') as db:
         res = await db.execute(f'''SELECT * FROM tips''')
+        res = await res.fetchall()
+        return res
+
+
+async def get_class():
+    async with aiosqlite.connect(r'database/users_id.db') as db:
+        res = await db.execute(f'''SELECT * FROM classs''')
         res = await res.fetchall()
         return res
