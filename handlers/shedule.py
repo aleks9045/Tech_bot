@@ -33,11 +33,28 @@ async def today(message: types.Message):
         await message.answer('Произошла ошибка, проверьте правильность введёного класса при регистрации.')
     else:
         weekday = datetime.date.today().weekday()
+        result = ''
         if weekday > 4:
             await message.answer('Сегодня выходной')
+        elif weekday == 0:
+            res = data.split('  ')[weekday * 2 + 1:5]
+            for i in range(len(res)):
+                if i % 2 != 0:
+                    result += '\n'.join(res[i].split())
+                else:
+                    result += '\n\n----------------' + res[i] + '----------------\n\n'
+            await message.answer(result)
         else:
             res = data.split('  ')[weekday * 2 + 1:weekday * 2 + 5]
-            await message.answer('\n'.join(res))
+            for i in range(len(res)):
+                if i % 2 != 0:
+                    result += '\n'.join(res[i].split())
+                else:
+                    result += '\n\n----------------' + res[i] + '----------------\n\n'
+            await message.answer(result)
+
+
+
 
 
 def register_handlers_shedule(dp: Dispatcher):
